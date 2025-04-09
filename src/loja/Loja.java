@@ -30,7 +30,7 @@ public class Loja extends Thread {
 				if (!ativa && esteiraFabrica.estaVazia())
 					break;
 				try {
-					Thread.sleep(100);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					break;
 				}
@@ -43,9 +43,9 @@ public class Loja extends Thread {
 				break;
 
 			if (posicaoLoja != -1) {
+				carro.setPosicaoEsteiraLoja(posicaoLoja);
 				LogFabrica.registrarVenda(carro);
 				LogLoja.registrarCompra(this, carro);
-				carro.setPosicaoEsteiraLoja(posicaoLoja);
 			}
 		}
 		System.out.println("❌ Loja " + nome + " finalizou compras da fábrica.");

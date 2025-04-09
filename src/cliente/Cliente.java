@@ -31,7 +31,7 @@ public class Cliente extends Thread {
             }
 
             try {
-                Thread.sleep(500 + random.nextInt(500));
+                Thread.sleep(2 + random.nextInt(500));
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

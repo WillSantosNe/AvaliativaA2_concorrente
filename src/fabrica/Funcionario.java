@@ -45,7 +45,7 @@ public class Funcionario extends Thread {
                     ferramentaEsquerda.acquire();
                 }
 
-                Thread.sleep(500); // Simula tempo de produção
+                Thread.sleep(1000); // Simula tempo de produção
 
                 Carro carro = new Carro(estacao.getId(), posicaoCircular);
                 int posicao = esteira.adicionarCarro(carro);
