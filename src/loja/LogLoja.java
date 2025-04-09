@@ -1,15 +1,18 @@
 package loja;
 
+import carro.Carro;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import carro.Carro;
-
 public class LogLoja {
 
-	public static synchronized void registrarCompra(Loja loja, Carro carro) {
-        String nomeArquivo = "log_compra_loja_" + loja.getNome().replaceAll(" ", "_") + ".txt";
+    private static final String LOG_DIR = "logs/";
+
+    public static synchronized void registrarCompra(Loja loja, Carro carro) {
+        criarDiretorioLogs();
+        String nomeArquivo = LOG_DIR + "log_compra_loja_" + loja.getNome().replaceAll(" ", "_") + ".txt";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo, true))) {
             writer.write(
@@ -29,7 +32,8 @@ public class LogLoja {
     }
 
     public static synchronized void registrarVenda(Loja loja, Carro carro, int idCliente) {
-        String nomeArquivo = "log_venda_loja_" + loja.getNome().replaceAll(" ", "_") + ".txt";
+        criarDiretorioLogs();
+        String nomeArquivo = LOG_DIR + "log_venda_loja_" + loja.getNome().replaceAll(" ", "_") + ".txt";
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo, true))) {
             writer.write(
@@ -46,6 +50,13 @@ public class LogLoja {
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void criarDiretorioLogs() {
+        File dir = new File(LOG_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
         }
     }
 }

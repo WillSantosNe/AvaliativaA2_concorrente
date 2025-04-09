@@ -1,17 +1,19 @@
 package fabrica;
 
+import carro.Carro;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import carro.Carro;
-
 public class LogFabrica {
 
-	private static final String LOG_PRODUCAO = "log_producao_fabrica.txt";
-    private static final String LOG_VENDA = "log_venda_fabrica.txt";
-    
+    private static final String LOG_DIR = "logs/";
+    private static final String LOG_PRODUCAO = LOG_DIR + "log_producao_fabrica.txt";
+    private static final String LOG_VENDA = LOG_DIR + "log_venda_fabrica.txt";
+
     public static synchronized void registrarProducao(Carro carro) {
+        criarDiretorioLogs();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_PRODUCAO, true))) {
             writer.write(
                 "ID=" + carro.getId() +
@@ -26,8 +28,9 @@ public class LogFabrica {
             e.printStackTrace();
         }
     }
-    
+
     public static synchronized void registrarVenda(Carro carro) {
+        criarDiretorioLogs();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_VENDA, true))) {
             writer.write(
                 "ID=" + carro.getId() +
@@ -42,6 +45,13 @@ public class LogFabrica {
             writer.newLine(); // quebra de linha
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void criarDiretorioLogs() {
+        File dir = new File(LOG_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
         }
     }
 }
