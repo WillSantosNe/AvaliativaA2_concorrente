@@ -8,6 +8,7 @@ import loja.Loja;
 
 public class Main {
 	public static void main(String[] args) {
+		
 		// 1. Inicia o estoque da fábrica com 500 peças
 		EstoquePecas estoque = new EstoquePecas(100);
 
@@ -17,7 +18,7 @@ public class Main {
 		// 3. Cria as 4 estações de montagem, cada uma com 5 funcionários
 		EstacaoMontagem[] estacoes = new EstacaoMontagem[4];
 		for (int i = 0; i < estacoes.length; i++) {
-			estacoes[i] = new EstacaoMontagem(i + 1, estoque, esteiraFabrica);
+			estacoes[i ] = new EstacaoMontagem(i + 1, estoque, esteiraFabrica);
 			estacoes[i].iniciarProducao(); // inicia os 5 funcionários
 		}
 
@@ -44,36 +45,23 @@ public class Main {
 		for (EstacaoMontagem estacao : estacoes) {
 			estacao.aguardarFinalizacao();
 		}
-
-		
-		
-
 		System.out.println("🚨 Estoque de peças da fábrica esgotado. Produção encerrada.");
 
-		System.out.println("Desbloqueando lojas...");
-		esteiraFabrica.encerrarProducao(); // desbloqueia as lojas
-		System.out.println("Lojas desbloqueadas");
+		
+		// Parar de produzir carros
+		esteiraFabrica.encerrarProducao();
 		
 		
 		// 7. Finaliza lojas após fim da produção
 		for (Loja loja : lojas) {
 			loja.encerrar(); // flag para encerrar thread da loja
-		}
-		
-		for (Loja loja : lojas) {
-			System.out.println("isAlive: " + loja.isAlive()); // flag para encerrar thread da loja
-			
-		}
-		
-		System.out.println("1");
-		
-		
+		}	
 		
 		// 8. Aguarda finalização das lojas
 		for (Loja loja : lojas) {
 			try {
 				loja.join();
-				System.out.println("✅ Loja " + loja.getNome() + " finalizada.");
+				//System.out.println("✅ Loja " + loja.getNome() + " finalizada.");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -90,7 +78,7 @@ public class Main {
 			}
 		}
 		
-		System.out.println("Clientes finalizados");
+		//System.out.println("Clientes finalizados");
 
 		// 10. Mensagem final
 		System.out.println("✅ Todas as lojas e clientes finalizaram. Programa encerrado.");

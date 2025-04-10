@@ -13,7 +13,7 @@ public class EsteiraFabrica {
 
 	public int adicionarCarro(Carro carro) {
 		int posicao = esteira.adicionar(carro);
-		carro.setPosicaoEsteiraFabrica(posicao);
+		carro.setPosicaoEsteiraFabrica(posicao); // coloca no objeto carro para fins de log em qual posicao da esteira da fabrica ele foi colocado
 		return posicao;
 	}
 

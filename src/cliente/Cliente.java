@@ -19,19 +19,28 @@ public class Cliente extends Thread {
     }
 
     @Override
-    public void run() {
+    public void run()	 {
         while (algumaLojaAtiva()) {
+        	// Pegando uma loja aleatoriamente
             Loja loja = lojasDisponiveis[random.nextInt(lojasDisponiveis.length)];
+            
+            // Compra carro
             Carro carro = loja.venderCarroParaCliente(); // pode esperar
 
+            // Se conseguiu pegar o carro
             if (carro != null) {
+            	
+            	// Adiciona na garagem
                 garagem.adicionar(carro);
+                
                 System.out.println("Cliente " + idCliente + " comprou");
+                
+                // Registra log da venda o carro
                 LogLoja.registrarVenda(carro.getLojaDestino(), carro, idCliente);
             }
 
             try {
-                Thread.sleep(2 + random.nextInt(500));
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -40,6 +49,8 @@ public class Cliente extends Thread {
         System.out.println("Cliente " + idCliente + " finalizou as compras. Total: " + garagem.getTotalCompras());
     }
 
+    
+    // Percorre todas as lojas e verifica se alguma delas está "viva"
     private boolean algumaLojaAtiva() {
         for (Loja loja : lojasDisponiveis) {
             if (loja.isAlive()) {

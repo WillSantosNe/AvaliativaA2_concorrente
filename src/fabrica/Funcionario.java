@@ -28,8 +28,7 @@ public class Funcionario extends Thread {
 
             // Tenta consumir peça (se não conseguir, para)
             if (!estoque.consumirPeca()) {
-                System.out.println("Funcionario " + posicaoCircular + " da estação " + estacao.getId()
-                        + " parou: estoque esgotado.");
+                System.out.println("Funcionario " + posicaoCircular + " da estação " + estacao.getId() + " parou: estoque esgotado.");
                 break;
             }
 
@@ -47,17 +46,20 @@ public class Funcionario extends Thread {
 
                 Thread.sleep(1000); // Simula tempo de produção
 
+                
                 Carro carro = new Carro(estacao.getId(), posicaoCircular);
                 int posicao = esteira.adicionarCarro(carro);
 
+                // Escrevendo na log o registro de producao
                 LogFabrica.registrarProducao(carro);
 
-                /*System.out.println("Funcionario " + posicaoCircular + " da estação " + estacao.getId()
-                        + " produziu carro na posição " + posicao);*/
+                System.out.println("Funcionario " + posicaoCircular + " da estação " + estacao.getId()
+                        + " produziu carro na posição " + posicao);
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
+                
             } finally {
                 // Garante liberação das ferramentas
                 ferramentaEsquerda.release();
@@ -65,7 +67,7 @@ public class Funcionario extends Thread {
             }
 
             try {
-                Thread.sleep(500); // Descanso após produção
+                Thread.sleep(1000); // Descanso após produção
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;

@@ -24,11 +24,19 @@ public class Loja extends Thread {
 			if (!ativa && esteiraFabrica.estaVazia() && esteiraLoja.estaVazia()) {
 				break;
 			}
-
+			
+			// Retira o carro da esteira da fabrica
 			Carro carro = esteiraFabrica.retirarCarro(!ativa);
+			
+			// Se nao tem carro na esteira da fabrica
 			if (carro == null) {
-				if (!ativa && esteiraFabrica.estaVazia())
+				
+				// Sai do while caso nao esteja ativa
+				if (!ativa && esteiraFabrica.estaVazia()) {					
 					break;
+				}
+				
+				// Espera 2 segundos caso a loja esteja ativa ainda
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
@@ -37,7 +45,10 @@ public class Loja extends Thread {
 				continue;
 			}
 
+			// Loja destino do carro é a propria loja
 			carro.setLojaDestino(this);
+			
+			
 			int posicaoLoja = esteiraLoja.adicionarCarro(carro, ativa);
 			if (!ativa && posicaoLoja == -1)
 				break;
@@ -58,7 +69,7 @@ public class Loja extends Thread {
 	public void encerrar() {
 		ativa = false;
 		esteiraLoja.encerrar();
-		System.out.println("Loja " + nome + " não está mais ativa");
+//		System.out.println("Loja " + nome + " não está mais ativa");
 	}
 
 	public int getIdLoja() {
